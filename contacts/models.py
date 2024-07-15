@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Create conact model
 
-class Contacts(models.Models):
+class Contacts(models.Model):
     user = models.ForeignKey(
         User, on_delete= models.CASCADE, null=False, blank=False
     )
