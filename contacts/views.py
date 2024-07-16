@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from .serializer import ContactSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from .models import Contacts
 
 # Create your views here.
 
@@ -10,8 +11,25 @@ class IndexView(APIView):
         return Response({"message": "welcome to first django api"})
 
 class ContactView(APIView):
-    # def get(self, request):
-    #     pass
+    def get(self, request):
+        try:
+            contacts = Contacts.objects.all()
+
+            serializer = ContactSerializer(contacts, many = True)
+
+            return Response({
+                "data" : serializer.data,
+                "message" : "Feedback fetch successfully"
+            }, status =  status.HTTP_200_OK)
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+
+
 
 
     def post(self, request):
