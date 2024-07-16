@@ -11,6 +11,7 @@ class IndexView(APIView):
         return Response({"message": "welcome to first django api"})
 
 class ContactView(APIView):
+    # get
     def get(self, request):
         try:
             contacts = Contacts.objects.all()
@@ -28,8 +29,6 @@ class ContactView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
-
-
 
 
     def post(self, request):
@@ -57,3 +56,29 @@ class ContactView(APIView):
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request):
+
+        try:
+            data = request.data
+
+            contact = Contacts.objects.get(id = data["id"])
+
+            serialiser = ContactSerializer(contact, data = data, partial = True)
+
+            if serialiser.is_valid():
+                serialiser.save()
+
+                return Response({
+                "data" : {},
+                "message" : "Message was updated successfully"
+            }, status =  status.HTTP_202_ACCEPTED)
+
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+
+            
+        
