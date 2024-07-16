@@ -79,6 +79,29 @@ class ContactView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
+        
+
+
+    def delete(self, request):
+        try:
+            data = request.data
+
+            contact = Contacts.objects.get(id = data["id"])
+
+            contact.delete()
+
+            return Response({
+                "message" : "Message was deleted successfully"
+            }, status= status.HTTP_204_NO_CONTENT)
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+
+
 
             
         
