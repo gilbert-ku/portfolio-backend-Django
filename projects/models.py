@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create conact model
 
-class Contacts(models.Model):
+class Projects(models.Model):
     user = models.ForeignKey(
         User, on_delete= models.CASCADE, null=False, blank=False
     )
