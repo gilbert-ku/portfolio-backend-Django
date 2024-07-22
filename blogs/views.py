@@ -14,6 +14,24 @@ class BlogsIndex(APIView):
 
 class BlogView(APIView):
 
+    def get(self, request):
+        try:
+            blogs = Blogs.objects.all()
+
+            serializer = BlogSerializer(blogs, many = True)
+
+            return Response({
+                "data" : serializer.data,
+                "message" : "Feedback fetch successfully"
+            }, status =  status.HTTP_200_OK)
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+
 
     def post(self, request):
         try:
