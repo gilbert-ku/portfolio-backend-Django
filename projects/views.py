@@ -3,6 +3,7 @@ from .serializer import ProjectSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Projects
+import uuid
 
 # Create your views here.
 
@@ -32,7 +33,7 @@ class ProjectsView(APIView):
 
         
 
-    # def post(self, request):
+    def post(self, request):
         try:
             data = request.data
 
@@ -57,3 +58,30 @@ class ProjectsView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
+        
+
+    def patch(self, request):
+
+
+        try:
+            data = request.data
+
+            project = Projects.objects.get(uuid = data[uuid])
+
+            serializer = ProjectSerializer(project, data=data, partial = True)
+
+            if serializer.is_valid():
+                serializer.save()
+
+                return Response({
+                "data" : {},
+                "message" : "Message was updated successfully"
+            }, status =  status.HTTP_202_ACCEPTED)
+
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+

@@ -63,10 +63,10 @@ class ContactView(APIView):
 
             contact = Contacts.objects.get(id = data["id"])
 
-            serialiser = ContactSerializer(contact, data = data, partial = True)
+            serializer = ContactSerializer(contact, data = data, partial = True)
 
-            if serialiser.is_valid():
-                serialiser.save()
+            if serializer.is_valid():
+                serializer.save()
 
                 return Response({
                 "data" : {},
