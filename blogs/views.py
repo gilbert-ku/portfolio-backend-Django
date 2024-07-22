@@ -92,5 +92,33 @@ class BlogView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
+        
+
+    def delete(self, request):
+        try:
+            data = request.data
+
+            blog = Blogs.get(uuid = data[uuid])
+
+            if not blog.DoesNotExist():
+                return Response({
+                    "data" : {},
+                    "message" : "invalid project uuid"
+
+                }, status= status.HTTP_400_BAD_REQUEST)
+            
+            blog.delete()
+
+
+            return Response({
+                "message" : "Message was deleted successfully"
+            }, status= status.HTTP_204_NO_CONTENT) 
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
 
            
