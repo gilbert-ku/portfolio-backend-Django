@@ -6,6 +6,10 @@ from .models import Projects
 
 # Create your views here.
 
+class ProjectIndex(APIView):
+    def get(self, request):
+        return Response({"message": "welcome to first django api"}) 
+    
 class ProjectsView(APIView):
     def get(self, request):
         return Response({"message": "welcome to first django api"})
