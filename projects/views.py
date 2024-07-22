@@ -68,8 +68,15 @@ class ProjectsView(APIView):
 
             project = Projects.objects.get(uuid = data[uuid])
 
-            serializer = ProjectSerializer(project, data=data, partial = True)
+            if not project.DoesNotExist():
+                return Response({
+                    "data" : {},
+                    "message" : "invalid project uuid"
 
+                }, status= status.HTTP_400_BAD_REQUEST)
+
+            serializer = ProjectSerializer(project, data=data, partial = True)
+            
             if serializer.is_valid():
                 serializer.save()
 
