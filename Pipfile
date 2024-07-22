@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+pillow = "*"
 
 [dev-packages]
 

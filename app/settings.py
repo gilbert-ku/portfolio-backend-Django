@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # third party app
     'rest_framework',
     "phonenumber_field",
+    # "pillow"
 
     # MY APPS
     # 'account',
