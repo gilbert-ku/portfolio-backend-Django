@@ -94,31 +94,29 @@ class BlogView(APIView):
             }, status =  status.HTTP_400_BAD_REQUEST)
         
 
-    def delete(self, request):
+    def delete(self, request, *args, **kwargs):
         try:
-            data = request.data
+            uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
-            blog = Blogs.get(uuid = data[uuid])
+            blog = Blogs.objects.filter(uuid=uuid).first()  # Use filter with .first() to handle DoesNotExist gracefully
 
-            if not blog.DoesNotExist():
+            if not blog:
                 return Response({
-                    "data" : {},
-                    "message" : "invalid project uuid"
+                    "data": {},
+                    "message": "Invalid project uuid"
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-                }, status= status.HTTP_400_BAD_REQUEST)
-            
             blog.delete()
 
-
             return Response({
-                "message" : "Message was deleted successfully"
-            }, status= status.HTTP_204_NO_CONTENT) 
-        
+                "message": "Message was deleted successfully"
+            }, status=status.HTTP_204_NO_CONTENT)
+
         except Exception as e:
             print(e)
             return Response({
-                "data" : {},
-                "message" : "something went wrong"
-            }, status =  status.HTTP_400_BAD_REQUEST)
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
            
