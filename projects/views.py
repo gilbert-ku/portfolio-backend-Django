@@ -11,10 +11,28 @@ class ProjectIndex(APIView):
         return Response({"message": "welcome to first django api"}) 
     
 class ProjectsView(APIView):
-    # def get(self, request):
-    #     return Response({"message": "welcome to first django api"})
+    def get(self, request):
+        try: 
+            projects = Projects.objects.all()
 
-    def post(self, request):
+            serializer = ProjectSerializer(projects, many = True)
+
+            return Response({
+                "data" : serializer.data,
+                "message" : "Feedback fetch successfully"
+            }, status =  status.HTTP_200_OK)
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data" : {},
+                "message" : "something went wrong"
+            }, status =  status.HTTP_400_BAD_REQUEST)
+
+
+        
+
+    # def post(self, request):
         try:
             data = request.data
 
