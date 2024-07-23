@@ -12,27 +12,39 @@ class ProjectIndex(APIView):
         return Response({"message": "welcome to first django api"}) 
     
 class ProjectsView(APIView):
-    def get(self, request):
-        try: 
-            projects = Projects.objects.all()
+    def get(self, request, *args, **kwargs):
+        try:
+            uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
-            serializer = ProjectSerializer(projects, many = True)
+            if uuid:
+                blog = Projects.objects.filter(uuid=uuid).first()
 
-            return Response({
-                "data" : serializer.data,
-                "message" : "Feedback fetch successfully"
-            }, status =  status.HTTP_200_OK)
-        
+                if not blog:
+                    return Response({
+                        "data": {},
+                        "message": "Invalid project uuid"
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                serializer = ProjectSerializer(blog)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Project fetched successfully"
+                }, status=status.HTTP_200_OK)
+            else:
+                blogs = Projects.objects.all()
+                serializer = ProjectSerializer(blogs, many=True)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Projects fetched successfully"
+                }, status=status.HTTP_200_OK)
+
         except Exception as e:
             print(e)
             return Response({
-                "data" : {},
-                "message" : "something went wrong"
-            }, status =  status.HTTP_400_BAD_REQUEST)
-
-
-        
-
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
+     
     def post(self, request):
         try:
             data = request.data
