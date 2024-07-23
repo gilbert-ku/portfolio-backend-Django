@@ -72,29 +72,31 @@ class ProjectsView(APIView):
             }, status =  status.HTTP_400_BAD_REQUEST)
         
 
-    def patch(self, request):
-
+    def patch(self, request, *args, **kwargs):
 
         try:
+            uuid = kwargs.get('pk')  # Get UUID from URL kwargs
+
+            # Use filter with .first() to handle DoesNotExist gracefully
+            blog = Projects.objects.filter(uuid=uuid).first()  
+
+            if not blog:
+                return Response({
+                    "data": {},
+                    "message": "Invalid project uuid"
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+
             data = request.data
 
-            project = Projects.objects.get(uuid = data[uuid])
-
-            if not project.DoesNotExist():
-                return Response({
-                    "data" : {},
-                    "message" : "invalid project uuid"
-
-                }, status= status.HTTP_400_BAD_REQUEST)
-
-            serializer = ProjectSerializer(project, data=data, partial = True)
+            serializer = ProjectSerializer(blog, data=data, partial = True)
             
             if serializer.is_valid():
                 serializer.save()
 
                 return Response({
                 "data" : {},
-                "message" : "Message was updated successfully"
+                "message" : "Project was updated successfully"
             }, status =  status.HTTP_202_ACCEPTED)
 
         except Exception as e:
@@ -103,7 +105,7 @@ class ProjectsView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
-        
+
 
     def delete(self, request, *args, **kwargs):
         try:
