@@ -16,23 +16,38 @@ class BlogsIndex(APIView):
 
 class BlogView(APIView):
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         try:
-            blogs = Blogs.objects.all()
+            uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
-            serializer = BlogSerializer(blogs, many = True)
+            if uuid:
+                blog = Blogs.objects.filter(uuid=uuid).first()
 
-            return Response({
-                "data" : serializer.data,
-                "message" : "Feedback fetch successfully"
-            }, status =  status.HTTP_200_OK)
-        
+                if not blog:
+                    return Response({
+                        "data": {},
+                        "message": "Invalid project uuid"
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                serializer = BlogSerializer(blog)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Blog fetched successfully"
+                }, status=status.HTTP_200_OK)
+            else:
+                blogs = Blogs.objects.all()
+                serializer = BlogSerializer(blogs, many=True)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Blogs fetched successfully"
+                }, status=status.HTTP_200_OK)
+
         except Exception as e:
             print(e)
             return Response({
-                "data" : {},
-                "message" : "something went wrong"
-            }, status =  status.HTTP_400_BAD_REQUEST)
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
     def post(self, request):
