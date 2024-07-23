@@ -55,30 +55,26 @@ class ContactView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
+        
 
-    def patch(self, request):
-
-        try:
-            data = request.data
-
-            contact = Contacts.objects.get(id = data["id"])
-
-            serializer = ContactSerializer(contact, data = data, partial = True)
-
-            if serializer.is_valid():
-                serializer.save()
-
-                return Response({
-                "data" : {},
-                "message" : "Message was updated successfully"
-            }, status =  status.HTTP_202_ACCEPTED)
-
-        except Exception as e:
-            print(e)
-            return Response({
-                "data" : {},
-                "message" : "something went wrong"
-            }, status =  status.HTTP_400_BAD_REQUEST)
+# contact does not require pacth since it comes from client
+    # def patch(self, request):
+    #     try:
+    #         data = request.data
+    #         contact = Contacts.objects.get(id = data["id"])
+    #         serializer = ContactSerializer(contact, data = data, partial = True)
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #             return Response({
+    #             "data" : {},
+    #             "message" : "Message was updated successfully"
+    #         }, status =  status.HTTP_202_ACCEPTED)
+    #     except Exception as e:
+    #         print(e)
+    #         return Response({
+    #             "data" : {},
+    #             "message" : "something went wrong"
+    #         }, status =  status.HTTP_400_BAD_REQUEST)
         
 
 
