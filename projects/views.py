@@ -93,18 +93,25 @@ class ProjectsView(APIView):
             }, status =  status.HTTP_400_BAD_REQUEST)
         
 
-    def delete(self, request):
+    def delete(self, request, *args, **kwargs):
         try:
-            data = request.data
 
-            project = Projects.get(uuid = data[uuid])
+            uuid = kwargs.get('pk') #get uuid from url kwargs
+
+            # Use filter with .first() to handle DoesNotExist gracefully
+            project = Projects.objects.filter(uuid=uuid).first()
+
+            if not project:
+                return Response({
+                    "data" : {},
+                    "message" : "Invalid project uuid"
+                }, status= status.HTTP_400_BAD_REQUEST)
 
 
             project.delete()
 
-
             return Response({
-                "message" : "Message was deleted successfully"
+                "message" : "Project was deleted successfully"
             }, status= status.HTTP_204_NO_CONTENT) 
         
         except Exception as e:

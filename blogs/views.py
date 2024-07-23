@@ -128,7 +128,7 @@ class BlogView(APIView):
             blog.delete()
 
             return Response({
-                "message": "Message was deleted successfully"
+                "message": "Blog was deleted successfully"
             }, status=status.HTTP_204_NO_CONTENT)
 
         except Exception as e:
