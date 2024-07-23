@@ -61,20 +61,23 @@ class BlogView(APIView):
             }, status =  status.HTTP_400_BAD_REQUEST)
         
 
-    def patch(self, request):
+    def patch(self, request, *args, **kwargs):
 
 
         try:
-            data = request.data
+            uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
-            blog = Blogs.objects.get(uuid = data[uuid])
+            # Use filter with .first() to handle DoesNotExist gracefully
+            blog = Blogs.objects.filter(uuid=uuid).first()  
 
-            if not blog.DoesNotExist():
+            if not blog:
                 return Response({
-                    "data" : {},
-                    "message" : "invalid project uuid"
+                    "data": {},
+                    "message": "Invalid project uuid"
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-                }, status= status.HTTP_400_BAD_REQUEST)
+
+            data = request.data
 
             serializer = BlogSerializer(blog, data=data, partial = True)
             
@@ -83,7 +86,7 @@ class BlogView(APIView):
 
                 return Response({
                 "data" : {},
-                "message" : "Message was updated successfully"
+                "message" : "Blog was updated successfully"
             }, status =  status.HTTP_202_ACCEPTED)
 
         except Exception as e:
@@ -98,7 +101,8 @@ class BlogView(APIView):
         try:
             uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
-            blog = Blogs.objects.filter(uuid=uuid).first()  # Use filter with .first() to handle DoesNotExist gracefully
+            # Use filter with .first() to handle DoesNotExist gracefully
+            blog = Blogs.objects.filter(uuid=uuid).first()  
 
             if not blog:
                 return Response({
