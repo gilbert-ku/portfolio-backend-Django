@@ -12,25 +12,36 @@ class IndexView(APIView):
 
 class ContactView(APIView):
     # get
-    def get(self, request):
+    def get(self, request, id=None):
         try:
-            contacts = Contacts.objects.all()
+            if id:
+                contact = Contacts.objects.filter(id=id).first()
+                
+                if not contact:
+                    return Response({
+                        "data": {},
+                        "message": "Invalid contact Id"
+                    }, status=status.HTTP_200_OK)
 
-            serializer = ContactSerializer(contacts, many = True)
-
-            return Response({
-                "data" : serializer.data,
-                "message" : "Feedback fetch successfully"
-            }, status =  status.HTTP_200_OK)
-        
+                serializer = ContactSerializer(contact)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Contact fetched successfully"
+                }, status=status.HTTP_200_OK)
+            else:
+                contacts = Contacts.objects.all()
+                serializer = ContactSerializer(contacts, many=True)
+                return Response({
+                    "data": serializer.data,
+                    "message": "Contacts fetched successfully"
+                }, status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
             return Response({
-                "data" : {},
-                "message" : "something went wrong"
-            }, status =  status.HTTP_400_BAD_REQUEST)
-
-
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
+                
     def post(self, request):
         try:
             data = request.data

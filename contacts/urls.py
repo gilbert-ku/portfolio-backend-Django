@@ -4,7 +4,7 @@ from contacts.views import IndexView, ContactView
 
 urlpatterns = [
     path("", IndexView.as_view()),
-    path("contact/", ContactView.as_view()),
-    path('contact/<int:id>/', ContactView.as_view()),
+    path("Contacts/", ContactView.as_view()),
+    path('Contact/<int:id>/', ContactView.as_view()),
 ]
 
