@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 pillow = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
