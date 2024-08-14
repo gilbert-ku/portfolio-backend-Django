@@ -7,9 +7,9 @@ import uuid
 
 # Create your views here.
 
-class ProjectIndex(APIView):
-    def get(self, request):
-        return Response({"message": "welcome to first django api"}) 
+# class ProjectIndex(APIView):
+#     def get(self, request):
+#         return Response({"message": "welcome to first django api"}) 
     
 class ProjectsView(APIView):
     def get(self, request, *args, **kwargs):
@@ -17,31 +17,32 @@ class ProjectsView(APIView):
             uuid = kwargs.get('pk')  # Get UUID from URL kwargs
 
             if uuid:
-                blog = Projects.objects.filter(uuid=uuid).first()
+                project = Projects.objects.filter(uuid=uuid).first()
 
-                if not blog:
+                if not project:
                     return Response({
-                        "data": {},
+                        "projects": {},
                         "message": "Invalid project uuid"
                     }, status=status.HTTP_400_BAD_REQUEST)
 
-                serializer = ProjectSerializer(blog)
+                serializer = ProjectSerializer(project)
+                print("Image URL:", project.image.url)
                 return Response({
-                    "data": serializer.data,
+                    "projects": serializer.data,
                     "message": "Project fetched successfully"
                 }, status=status.HTTP_200_OK)
             else:
-                blogs = Projects.objects.all()
-                serializer = ProjectSerializer(blogs, many=True)
+                prijects = Projects.objects.all()
+                serializer = ProjectSerializer(prijects, many=True)
                 return Response({
-                    "data": serializer.data,
+                    "projects": serializer.data,
                     "message": "Projects fetched successfully"
                 }, status=status.HTTP_200_OK)
 
         except Exception as e:
             print(e)
             return Response({
-                "data": {},
+                # "data": {},
                 "message": "Something went wrong"
             }, status=status.HTTP_400_BAD_REQUEST)
      
