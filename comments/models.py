@@ -21,7 +21,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class Comments(models.Model):
+class Comments(BaseModel):
     # foriegn key
     Blogs = models.ForeignKey(
         Blogs, on_delete= models.CASCADE, null=False, blank= False
