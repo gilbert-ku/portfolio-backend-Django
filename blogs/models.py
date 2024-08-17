@@ -26,8 +26,7 @@ class Blogs(BaseModel):
     image = models.ImageField(upload_to= "blog/blogpost")
     blog_text = models.TextField(max_length=3000)
     date = models.DateTimeField(auto_now_add=True)
-    comments = models.TextField(max_length=1000)
-    like = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return self.title
