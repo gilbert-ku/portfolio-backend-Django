@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     # 'account',
     "contacts",
     "projects",
-    "blogs"
+    "blogs",
     "comments"
 ]
 

@@ -1,6 +1,6 @@
 from django.db import models
-# from ..projects import Projects
-from projects.models import Projects
+# from projects.models import Projects
+from blogs.models import Blogs
 
 
 import uuid
@@ -23,8 +23,8 @@ class BaseModel(models.Model):
 
 class Comments(models.Model):
     # foriegn key
-    Projects = models.ForeignKey(
-        Projects, on_delete= models.CASCADE, null=False, blank= False
+    Blogs = models.ForeignKey(
+        Blogs, on_delete= models.CASCADE, null=False, blank= False
     )
 
     # fields
