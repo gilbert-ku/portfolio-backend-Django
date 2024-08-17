@@ -11,8 +11,8 @@ import uuid
 class BaseModel(models.Model):
     uuid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     created_at = models.DateField(auto_now_add=True)
-    update_at = models.DateField(auto_now_add=True)
-    # update_at = models.DateField(auto_add=True)
+    # update_at = models.DateField(auto_now_add=True)
+    update_at = models.DateField(auto_now=True)
 
 
     class Meta:

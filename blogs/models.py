@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 import uuid  #is used to generate uniq id
 
 class BaseModel(models.Model):
@@ -9,8 +10,8 @@ class BaseModel(models.Model):
 
     created_date = models.DateField(auto_now_add=True)
     created_time = models.TimeField(auto_now_add=True)
-    updated_date = models.DateField(auto_now_add=True)
-    updated_time = models.TimeField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+    updated_time = models.TimeField(auto_now=True)
 
 
     class Meta:
@@ -25,6 +26,8 @@ class Blogs(BaseModel):
     image = models.ImageField(upload_to= "blog/blogpost")
     blog_text = models.TextField(max_length=3000)
     date = models.DateTimeField(auto_now_add=True)
+    comments = models.TextField(max_length=1000)
+    like = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

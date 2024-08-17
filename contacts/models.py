@@ -1,14 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
 # Create conact model
 
 class Contacts(models.Model):
-    user = models.ForeignKey(
-        User, on_delete= models.CASCADE, null=False, blank=False
-    )
+    # user = models.ForeignKey(
+    #     User, on_delete= models.CASCADE, null=False, blank=False
+    # )
 
     full_name = models.CharField(max_length=100)
     phone = PhoneNumberField()

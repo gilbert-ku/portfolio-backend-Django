@@ -9,9 +9,9 @@ import uuid
 # Create your views here.
 
 
-class BlogsIndex(APIView):
-    def get(self, request):
-        return Response({"message": "welcome to my blogs"})
+# class BlogsIndex(APIView):
+#     def get(self, request):
+#         return Response({"message": "welcome to my blogs"})
     
 
 class BlogView(APIView):
