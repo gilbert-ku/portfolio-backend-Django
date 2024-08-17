@@ -30,6 +30,51 @@ class CommentsView(APIView):
             return Response ({
                 "Message" : "Something Went Wrong"
             }, status= status.HTTP_400_BAD_REQUEST)
+        
 
+    # delete
+    def delete(self, request, *args, **kwargs):
+        # try:
+
+        #     comments = request.comments
+
+        #     comment = Comments.objects.get(uuid = comments["uuid"])
+
+        #     comment.delete()
+
+        #     return Response({
+        #         "Message" : "Comment was delete Successfully"
+        #     }, status= status.HTTP_204_NO_CONTENT)
+        
+        # except Exception as e:
+        #     return Response({
+        #         "Message" : "Something went wrong"
+        #     }, status= status.HTTP_400_BAD_REQUEST)
+
+        try:
+
+            # get uuid from Url kwargs
+            uuid = kwargs.get("pk")
+
+            comment = Comments.objects.filter(uuid=uuid).first()
+
+
+            if not comment:
+                return Response({
+                    "Message" : "Invalid project uuid"
+                }, status= status.HTTP_400_BAD_REQUEST)
+            
+            comment.delete()
+
+            return Response({
+                "Message": "Comment Was Delete Successfully"
+            }, status= status.HTTP_204_NO_CONTENT)
+        
+        except Exception as e:
+            print(e)
+            return Response({
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
