@@ -5,8 +5,46 @@ from rest_framework import status
 from .models import Comments
 
 class CommentsView(APIView):
-    def get(self):
-        pass
+    def get(self, request, *args, **kwargs):
+        try:
+
+            uuid = kwargs.get("pk")
+
+
+            if uuid:
+
+                comment = Comments.objects.filter(uuid = uuid).first()
+
+                if not comment:
+                    return Response({
+                        "Message" : "Invalid comment uuid"
+                    }, status= status.HTTP_400_BAD_REQUEST)
+                
+                serializer = CommentSerializer(comment)
+
+                return Response({
+                    "comment": serializer.data,
+                    "Message" : "Comment Fetched successfully"
+                }, status= status.HTTP_200_OK)
+            
+            else:
+                comments = Comments.objects.all()
+
+                serializer = CommentSerializer(comments, many=True)
+
+                return Response({
+                    "comments" : serializer.data,
+                    "Message" : "Comments fetched successfully"
+                }, status= status.HTTP_200_OK)
+            
+        except Exception as e:
+            print(e)
+            return Response({
+                "data": {},
+                "message": "Something went wrong"
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+            
 
     def post(self, request):
         try:
