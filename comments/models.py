@@ -1,5 +1,7 @@
 from django.db import models
-from ..projects import Projects
+# from ..projects import Projects
+from projects.models import Projects
+
 
 import uuid
 
