@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 
@@ -22,9 +23,11 @@ class Blogs(BaseModel):
         User, on_delete= models.CASCADE, null=False, blank=False
     )
 
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=3000)
     image = models.ImageField(upload_to= "blog/blogpost")
-    blog_text = models.TextField(max_length=3000)
+    blog_text = models.TextField(max_length=3000, null=True, blank=True)
+    # blog_body = CKEditor5Field()
+    blog_body =  CKEditor5Field()
     date = models.DateTimeField(auto_now_add=True)
     
 

@@ -3,6 +3,7 @@ from .serializer import BlogSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Blogs
+import html
 
 import uuid
 
@@ -31,14 +32,14 @@ class BlogView(APIView):
 
                 serializer = BlogSerializer(blog)
                 return Response({
-                    "data": serializer.data,
+                    "blogs": serializer.data,
                     "message": "Blog fetched successfully"
                 }, status=status.HTTP_200_OK)
             else:
                 blogs = Blogs.objects.all()
                 serializer = BlogSerializer(blogs, many=True)
                 return Response({
-                    "data": serializer.data,
+                    "blogs": serializer.data,
                     "message": "Blogs fetched successfully"
                 }, status=status.HTTP_200_OK)
 
@@ -74,6 +75,19 @@ class BlogView(APIView):
                 "data" : {},
                 "message" : "something went wrong"
             }, status =  status.HTTP_400_BAD_REQUEST)
+        
+    def escape_special_characters(self, data):
+        """
+        Recursively escape special characters in all string fields of a dictionary or list of dictionaries.
+        """
+        if isinstance(data, dict):
+            return {key: self.escape_special_characters(value) if isinstance(value, (str, dict, list)) else value for key, value in data.items()}
+        elif isinstance(data, list):
+            return [self.escape_special_characters(item) for item in data]
+        elif isinstance(data, str):
+            return html.escape(data)
+        else:
+            return data
         
 
     def patch(self, request, *args, **kwargs):

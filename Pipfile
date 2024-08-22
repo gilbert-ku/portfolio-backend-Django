@@ -9,6 +9,8 @@ djangorestframework = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 pillow = "*"
 django-cors-headers = "*"
+django-ckeditor-5 = "*"
+django-ckeditor = "*"
 
 [dev-packages]
 
