@@ -111,7 +111,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # }
 
 
-
 # Override the default database with the one specified in DATABASE_URL, if provided
 DATABASES = {
     'default': dj_database_url.config(
