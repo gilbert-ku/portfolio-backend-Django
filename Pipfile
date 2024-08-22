@@ -11,6 +11,7 @@ pillow = "*"
 django-cors-headers = "*"
 django-ckeditor-5 = "*"
 django-ckeditor = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
