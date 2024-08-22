@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-&ze)bwt)!24czdkvki#(@4ju)ww0-o%aae@&23!0figtiigxty
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['portfolio-backend-1kqj.onrender.com']
 
 
 # Application definition
@@ -177,24 +177,6 @@ TEMPLATE_DIRS = (
 )
 
 
-
-# CKEDITOR_5_FILE_STORAGE = "path_to_storage.CustomStorage" # optional
-
-# CKEDITOR_5_CONFIGS = {
-#     # 'default': {
-#     #     # 'toolbar': 'standard',  # Customize the toolbar (e.g., 'basic', 'standard', or 'full')
-#     #     'height': 400,  # Height of the editor
-#     #     'width': '100%',  # Width of the editor
-#     #     'filebrowserUploadUrl': "/ckeditor5/upload/",  # URL for file uploads
-#     #     'filebrowserBrowseUrl': "/ckeditor5/browse/",  # URL for browsing uploaded files
-#     # },
-
-#     'default': {
-#         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-#                     'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
-
-#     },
-# }
 
 customColorPalette = [
         {
