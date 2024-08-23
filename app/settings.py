@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-&ze)bwt)!24czdkvki#(@4ju)ww0-o%aae@&23!0figtiigxty
 DEBUG = True
 
 ALLOWED_HOSTS = ['portfolio-backend-1kqj.onrender.com']
+# ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -74,7 +75,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
 # URL used to access the media
 MEDIA_URL = '/media/'
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 ROOT_URLCONF = 'app.urls'
